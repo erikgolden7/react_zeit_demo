@@ -8,19 +8,24 @@
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "massive": "^4.5.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-router-dom": "^4.2.2"
-  },
-  "devDependencies": {
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17"
+  },
+  "devDependencies": {},
+  "now": {
+    "alias": "sheas_awesome_todos_list"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "now-start": "node server/index.js",
+    "deploy": "now --public --dotenv=.env.prod -d"
   },
   "proxy": "http://localhost:3001"
 }

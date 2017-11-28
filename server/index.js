@@ -6,16 +6,22 @@ const express = require("express"),
   config = require("./config"),
   session = require("express-session"),
   massive = require("massive");
-//        require('dotenv').config()
+require("dotenv").config();
 
-massive(config.connection_string)
+massive(process.env.CONNECTION_STRING)
   .then(dbInstance => app.set("db", dbInstance))
   .catch(console.log);
 
-app.use(session(config.session));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: process.env.RESAVE,
+    saveUninitialized: process.env.SAVE_UNINITIALIZED
+  })
+);
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/", express.static(__dirname));
+app.use("/", express.static(`${__dirname}/../build`));
 
 app.get("/api/todos", (req, res) => {
   const db = req.app.get("db");
@@ -28,7 +34,6 @@ app.get("/api/todos", (req, res) => {
 });
 app.post("/api/todos", (req, res) => {
   const db = req.app.get("db");
-  console.log(req.body.todo);
   db
     .post_todos(req.body.todo)
     .then(todos => {
@@ -44,6 +49,11 @@ app.delete("/api/todos/:id", (req, res) => {
       return res.send(todos);
     })
     .catch(console.log);
+});
+
+const path = require("path");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
 app.listen(port, function() {
