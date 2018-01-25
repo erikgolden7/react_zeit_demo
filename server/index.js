@@ -1,7 +1,7 @@
 const express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
-  port = 3001,
+  port = 8080,
   app = express(),
   session = require('express-session')
 require('dotenv').config()
