@@ -7,22 +7,22 @@ const express = require("express"),
   massive = require("massive");
 require("dotenv").config();
 
-massive(process.env.CONNECTION_STRING)
-  .then(dbInstance => {
-    const table = dbInstance.tables.find(c => c.name == "todos");
-    if (!table) {
-      dbInstance
-        .run(
-          `create table todos (
-        id serial primary key,
-        todo varchar(40)
-      )`
-        )
-        .then(console.log);
-    }
-    app.set("db", dbInstance);
-  })
-  .catch(console.log);
+// massive(process.env.CONNECTION_STRING)
+//   .then(dbInstance => {
+//     const table = dbInstance.tables.find(c => c.name == "todos");
+//     if (!table) {
+//       dbInstance
+//         .run(
+//           `create table todos (
+//         id serial primary key,
+//         todo varchar(40)
+//       )`
+//         )
+//         .then(console.log);
+//     }
+//     app.set("db", dbInstance);
+//   })
+//   .catch(console.log);
 
 app.use(
   session({
@@ -69,6 +69,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/../build/index.html"));
 });
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log("Server listening on port", port);
 });
